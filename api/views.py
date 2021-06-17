@@ -1,6 +1,7 @@
 from rest_framework import generics
 from rest_framework.response import Response
-from .models import Quizzes, Question
+from rest_framework.serializers import Serializer
+from .models import Category, Quizzes, Question
 from .serializers import QuizSerializer, RandomQuestionSerializer, QuestionSerializer
 from rest_framework.views import APIView
 
@@ -26,3 +27,9 @@ class QuizQuestion(APIView):
         quiz = Question.objects.filter(quiz__title=kwargs['topic'])
         serializer = QuestionSerializer(quiz, many=True)
         return Response(serializer.data)
+
+class StartQuiz(APIView):
+    def get(self,request,**kwargs):
+        quiz = Quizzes.objects.filter(Category__name=kwargs['title'])
+        Serializer=QuizSerializer(Quiz,many=True)
+        return Response(Serializer.data)
